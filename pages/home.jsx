@@ -1,6 +1,6 @@
 import React from 'react';
-import Slider from '../slider';
-import {AnimateSlider } from '../slider';
+import Slider from '../src/components/slider';
+import {AnimateSlider } from '../src/components/slider';
 
 
 export default function Home() { return (

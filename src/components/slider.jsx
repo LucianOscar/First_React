@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 const Slider = () => {  
     return(
     <section className="relative flex flex-col justify-center items-center py-20 lg:py-32 w-full bg-gradient-to-br from-[var(--color-secondary)] via-[#E5DEFF] to-[var(--color-primary)] overflow-hidden">
@@ -35,36 +36,97 @@ const Slider = () => {
     )};
 
 
+
+
+
 const AnimateSlider = () => {
   const images = [
-    "https://imgs.search.brave.com/0CTItFDk9qX8fgtKfu38grP5aOcii1ezPjLa6ljTlBU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvcHJldmll/dy0xeC8xNC8xNS9v/bmxpbmUtc2hvcHBp/bmctY2FydG9vbi13/b21hbi1tYWtlcy1w/dXJjaGFzZXMtdmVj/dG9yLTM2NTAxNDE1/LmpwZw",
-    "https://imgs.search.brave.com/0HmAYfxkDaZ0HLFcoQTwLHfFFhR9WqOx-54FbJtP5aU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS12ZWN0b3Iv/bWFuLXdvbWFuLWNo/YXR0aW5nLW9ubGlu/ZS1wZW9wbGUtdXNp/bmctbW9iaWxlLXBo/b25lcy1zcGVlY2gt/YnViYmxlLWRpc3Rh/bmNlLWZsYXQtdmVj/dG9yLWlsbHVzdHJh/dGlvbi1jb21tdW5p/Y2F0aW9uLWludGVy/bmV0Xzc0ODU1LTg0/NDAuanBnP3NlbXQ9/YWlzX2h5YnJpZCZ3/PTc0MA",
-    "https://imgs.search.brave.com/ywr1KhO3ujCNe6gXFlIgjzlDr0hnXTWFAUvHhA8AvOY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvcHJldmll/dy0xeC81MC85My93/ZWItZGVzaWduLWZv/ci1vbmxpbmUtc2hv/cHBpbmctc2Vydmlj/ZS1hcHAtdmVjdG9y/LTM1MTk1MDkzLmpw/Zw",
-    "https://imgs.search.brave.com/-DGwPfUif3uuRr1MGB4C_2jXMLedehQpRUWaE2WVTlI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTIx/MTcwNTQ3NC92ZWN0/b3IvZW1wbG95ZWVz/LWdpdmluZy1oYW5k/cy1hbmQtaGVscGlu/Zy1jb2xsZWFndWVz/LXRvLXdhbGstdXBz/dGFpcnMuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPWJ1WUFq/YnB0cExMaURQR3p0/MW5mcjBJZl9heC1i/ZVBhdmtncGluLUIt/VVU9",
+    "https://picsum.photos/id/1018/400/400",
+    "https://picsum.photos/id/1025/400/400",
+    "https://picsum.photos/id/1027/400/400",
+    "https://picsum.photos/id/1035/400/400",
   ];
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const goToPrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const getPositionStyle = (index) => {
+    const position = (index - currentIndex + images.length) % images.length;
+
+    if (position === 0) {
+      return {
+        transform: "translateX(15%) scale(1)",
+        zIndex: 3,
+        opacity: 1,
+        pointerEvents: "none",
+        cursor: "default",
+      };
+    } else if (position === 1) {
+      return {
+        transform: "translateX(250px) scale(0.7)",
+        zIndex: 2,
+        opacity: 0.6,
+        pointerEvents: "auto",
+        cursor: "pointer",
+      };
+    } else if (position === images.length - 1) {
+      return {
+        transform: "translateX(-250px) scale(0.7)",
+        zIndex: 2,
+        opacity: 0.6,
+        pointerEvents: "auto",
+        cursor: "pointer",
+      };
+    } else {
+      return {
+        transform: "scale(0.5)",
+        zIndex: 1,
+        opacity: 0,
+        pointerEvents: "none",
+      };
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center h-[500px] bg-[var(--color-main)]">
-      <div className="relative w-[200px] h-[200px] animate-rotate">
-        {images.map((src, index) => (
-          <span
-            key={index}
-            style={{
-              "--i": index,
-              transform: `rotateY(${index * 90}deg) translateZ(400px)`,
-            }}
-            className="absolute w-full h-full"
-          >
+    <div className="flex flex-col items-center justify-center h-[400px] bg-gray-800">
+      <div className="relative w-[70%] h-full m-auto overflow-hidden ">
+        {images.map((src, index) => {
+          const style = getPositionStyle(index);
+          return (
             <img
-              className="w-full h-full object-cover border-2 border-white rounded-lg shadow-lg"
+              key={index}
               src={src}
+              alt={`Slide ${index}`}
+              onClick={() => {
+                const pos = (index - currentIndex + images.length) % images.length;
+                if (pos === 1) goToNext();
+                if (pos === images.length - 1) goToPrev();
+              }}
+              className="absolute top-0 left-1/2 w-full md:w-[40%] h-[250px] object-cover rounded-xl border-4 border-white shadow-xl transition-all duration-700"
+              style={{
+                transform: `${style.transform} translateX(-60%)`,
+                zIndex: style.zIndex,
+                opacity: style.opacity,
+                pointerEvents: style.pointerEvents,
+                cursor: style.cursor,
+              }}
             />
-          </span>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
 };
+
+
+
 
 export default Slider;
 export { AnimateSlider }; // Export styles if needed

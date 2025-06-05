@@ -1,18 +1,23 @@
-import React from "react";
-import MyRoute from "./components/myRoute"; 
+import { Routes, Route} from "react-router-dom";
+import MainLayout from "../layout/MainLayout";
+import Home from "../pages/home";
+import About from "../pages/About";
+import Contact from "../pages/contact";
+import Login from "../pages/Auth/login1";
+import Register from "../pages/Auth/register0";
 
 function App() {
   return (
-    <>
-      <MyRoute />
-      <div className="flex flex-col items-center justify-center min-h-screen bg-[var(--color-main)] text-[var(--color-text-primary)]">
-        <h1 className="text-center text-2xl font-bold my-4">Welcome to KEno</h1>
-        <p className="text-center text-lg">Your one-stop solution for all your needs.</p>
-      </div>
-      <footer className="bg-[var(--color-secondary)] text-[var(--color-text-primary)] py-4 text-center">
-        <p>&copy; {new Date().getFullYear()} KEno. All rights reserved.</p>
-      </footer>
-    </>
+    <Routes>
+      <Route element={<MainLayout/>}>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/about" element={<About/>}/>
+        <Route path="/contact" element={<Contact/>}/>
+
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register0" element={<Register/>}/>
+      </Route>
+    </Routes>
   );
 }
 

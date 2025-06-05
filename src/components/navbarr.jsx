@@ -1,11 +1,13 @@
 import React, { useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../index.css";
 
-const MyNavbar = () => {
+const Navbar = () => {
   const menuRef = useRef(null);
   const menuBtnRef = useRef(null);
   const removeMenuBtnRef = useRef(null);
+
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const menu = menuRef.current;
@@ -52,18 +54,31 @@ const MyNavbar = () => {
       </button>
 
         <li className="px-0 md:px-3">
-          <Link to="/home" className="text-[var(--color-text-primary)] hover:text-[var(--color-secondary)] transition">Home</Link>
+          <Link to="/" 
+          className={`${pathname == '/' ? 'hover:text-[var(--color-secondary)] text-red-600 transition': 'text-[var(--color-text-primary)] hover:text-[var(--color-secondary)] transition'}`}
+          >Home</Link>
         </li>
         <li className="px-0 md:px-3">
-          <Link to="/about" className="text-[var(--color-text-primary)] hover:text-[var(--color-secondary)] transition">About</Link>
+          <Link to="/about"
+          className={`${pathname == '/about' ? 'hover:text-[var(--color-secondary)] text-red-600 transition': 'text-[var(--color-text-primary)] hover:text-[var(--color-secondary)] transition'}`}
+          >About</Link>
         </li>
         <li className="px-0 md:px-3">
-          <Link to="/contact" className="text-[var(--color-text-primary)] hover:text-[var(--color-secondary)] transition">Contact</Link>
+          <Link to="/contact" 
+          className={`${pathname == '/contact' ? 'hover:text-[var(--color-secondary)] text-red-600 transition': 'text-[var(--color-text-primary)] hover:text-[var(--color-secondary)] transition'}`}
+          >Contact</Link>
         </li>
+
+        {pathname == '/login' ? (
+          <button className="px-3 py-1 bg-[var(--color-secondary)] text-[var(--color-text-primary)] rounded hover:bg-[var(--color-tertiary)] transition">
+            <Link to="/register0" className="text-[var(--color-text-primary)] transition">Register</Link>
+          </button>
+        ) : 
         <button className="px-3 py-1 bg-[var(--color-secondary)] text-[var(--color-text-primary)] rounded hover:bg-[var(--color-tertiary)] transition">
           {/* Auth link */}
           <Link to="/login" className="text-[var(--color-text-primary)] transition">Login</Link>
-        </button>
+        </button>}
+        
       </ul>
 
       {/* Open menu button */}
@@ -77,4 +92,4 @@ const MyNavbar = () => {
   );
 };
 
-export default MyNavbar;
+export default Navbar;
