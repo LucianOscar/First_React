@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import AuthButtons from "../../pages/Auth/authButtons";
 import "../index.css";
 
 const Navbar = () => {
@@ -69,15 +70,7 @@ const Navbar = () => {
           >Contact</Link>
         </li>
 
-        {pathname == '/login' ? (
-          <button className="px-3 py-1 bg-[var(--color-secondary)] text-[var(--color-text-primary)] rounded hover:bg-[var(--color-tertiary)] transition">
-            <Link to="/register0" className="text-[var(--color-text-primary)] transition">Register</Link>
-          </button>
-        ) : 
-        <button className="px-3 py-1 bg-[var(--color-secondary)] text-[var(--color-text-primary)] rounded hover:bg-[var(--color-tertiary)] transition">
-          {/* Auth link */}
-          <Link to="/login" className="text-[var(--color-text-primary)] transition">Login</Link>
-        </button>}
+        <AuthButtons />
         
       </ul>
 

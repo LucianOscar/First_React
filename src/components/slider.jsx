@@ -64,7 +64,6 @@ const AnimateSlider = () => {
       return {
         transform: "translateX(15%) scale(1)",
         zIndex: 3,
-        opacity: 1,
         pointerEvents: "none",
         cursor: "default",
       };
@@ -72,7 +71,6 @@ const AnimateSlider = () => {
       return {
         transform: "translateX(250px) scale(0.7)",
         zIndex: 2,
-        opacity: 0.6,
         pointerEvents: "auto",
         cursor: "pointer",
       };
@@ -80,7 +78,6 @@ const AnimateSlider = () => {
       return {
         transform: "translateX(-250px) scale(0.7)",
         zIndex: 2,
-        opacity: 0.6,
         pointerEvents: "auto",
         cursor: "pointer",
       };
@@ -88,7 +85,6 @@ const AnimateSlider = () => {
       return {
         transform: "scale(0.5)",
         zIndex: 1,
-        opacity: 0,
         pointerEvents: "none",
       };
     }
@@ -109,11 +105,10 @@ const AnimateSlider = () => {
                 if (pos === 1) goToNext();
                 if (pos === images.length - 1) goToPrev();
               }}
-              className="absolute top-0 left-1/2 w-full md:w-[40%] h-[250px] object-cover rounded-xl border-4 border-white shadow-xl transition-all duration-700"
+              className="absolute top-0 left-1/2 w-full md:w-[40%] h-full object-cover rounded-xl border-4 border-white shadow-xl transition-all duration-700"
               style={{
                 transform: `${style.transform} translateX(-60%)`,
                 zIndex: style.zIndex,
-                opacity: style.opacity,
                 pointerEvents: style.pointerEvents,
                 cursor: style.cursor,
               }}
