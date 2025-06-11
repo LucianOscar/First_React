@@ -1,0 +1,11 @@
+.typing-letter {
+  display: inline-block;
+  opacity: 0;
+  animation: typingLetter 0.05s forwards;
+}
+
+@keyframes typingLetter {
+  to {
+    opacity: 1;
+  }
+}

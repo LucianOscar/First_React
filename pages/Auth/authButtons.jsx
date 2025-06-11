@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLocation, Link } from "react-router-dom"; 
-import Logout from "./logout";
+import { useLocation, Link } from "react-router-dom";   
+import Swal from "sweetalert2";
 
 
 const AuthButtons = () => {
@@ -11,7 +11,7 @@ const AuthButtons = () => {
   useEffect(() => {
     // Check if user is logged in from session storage
     const status = sessionStorage.getItem("isLoggedIn");
-    setIsLoggedIn(status === "true");
+    setIsLoggedIn(status === "false");
   }, []);
 
   // State to control the visibility of the modal
@@ -32,11 +32,61 @@ const AuthButtons = () => {
       {!isLoggedIn ? (
         // If not logged in, show Login or Register button
         pathname === "/login" ? (
-          <button className="px-3 py-1 bg-[var(--color-secondary)] text-[var(--color-text-primary)] rounded hover:bg-[var(--color-tertiary)] transition">
+          <button
+           className="
+           relative 
+            px-4 py-1
+            text-white 
+            text-lg 
+            font-semibold 
+            rounded-2xl 
+            overflow-hidden 
+            
+            bg-white/10  /* Semi-transparent white background */
+            backdrop-blur-lg /* The key ingredient: blurs the background */
+            border-white/20 /* Subtle border to catch the light */
+            /* Soft shadow for depth */
+            
+            transition-all 
+            duration-300 
+            ease-in-out
+            hover:shadow-2xl
+            hover:bg-white/20
+            hover:-translate-y-1
+            
+            focus:outline-none 
+            focus:ring-4 
+            focus:ring-white/50
+          ">
             <Link to="/register0" className="text-[var(--color-text-primary)] transition">Register</Link>
           </button>
         ) : (
-          <button className="px-3 py-1 bg-[var(--color-secondary)] text-[var(--color-text-primary)] rounded hover:bg-[var(--color-tertiary)] transition">
+          <button 
+          className="
+            relative 
+            px-4 py-1
+            text-white 
+            text-lg 
+            font-semibold 
+            rounded-2xl 
+            overflow-hidden 
+            
+            bg-white/10  /* Semi-transparent white background */
+            backdrop-blur-lg /* The key ingredient: blurs the background */
+            border-white/20 /* Subtle border to catch the light */
+            /* Soft shadow for depth */
+            
+            transition-all 
+            duration-300 
+            ease-in-out
+            hover:shadow-2xl
+            hover:bg-white/20
+            hover:-translate-y-1
+            
+            focus:outline-none 
+            focus:ring-4 
+            focus:ring-white/50
+          ">
             <Link to="/login" className="text-[var(--color-text-primary)] transition">Login</Link>
           </button>
         )
@@ -44,7 +94,7 @@ const AuthButtons = () => {
         // If logged in, show Profile button to open the modal
         <button
           onClick={openModal}
-          className="px-3 py-1 text-[var(--color-text-primary)] rounded transition hover:bg-[var(--color-secondary)]"
+          className="px-3 py-1 text-[var(--color-text-primary)] rounded transition hover:translate-y-[-2px] hover:scale-[1.1]"
         >
           <i className="fa-regular fa-circle-user text-xl"></i>
         </button>
@@ -56,7 +106,7 @@ const AuthButtons = () => {
   );
 };
 
-function ProfileModal({ isOpen, onClose }) {
+function ProfileModal({ isOpen, onClose}) {
     const navigate = useNavigate();
   // Retrieve user data from session storage
   const storedData = JSON.parse(sessionStorage.getItem("registeredUser"));
@@ -74,7 +124,7 @@ function ProfileModal({ isOpen, onClose }) {
       // Immediately set animation state for animation-out
       setShouldAnimateIn(false);
     }
-    return () => clearTimeout(timeoutId); // Cleanup timeout
+    return () => clearTimeout(timeoutId);
   }, [isOpen]);
 
   // Don't render the modal until it's open or animating out
@@ -192,9 +242,9 @@ function ProfileModal({ isOpen, onClose }) {
             </li>
             <li>
               {/* CORRECTED: Changed <link> to <Link> for React Router navigation */}
-              <Link
+              <button
+                type="button"
                 onClick={() => Logout(navigate)}
-                to="/logout"
                 className="flex items-center p-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 rounded-lg transition duration-200 ease-in-out"
               >
                 {/* SVG for 'Log Out' icon */}
@@ -215,7 +265,7 @@ function ProfileModal({ isOpen, onClose }) {
                   <line x1="21" x2="9" y1="12" y2="12" />
                 </svg>
                 <span className="font-medium">Log Out</span>
-              </Link>
+              </button>
             </li>
           </ul>
         </nav>
@@ -223,5 +273,30 @@ function ProfileModal({ isOpen, onClose }) {
     </div>
   );
 }
+
+
+// Logout function to handle user logout
+const Logout = (navigate) => {
+  // Show confirmation dialog
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You will be logged out.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Logout",
+    cancelButtonText: "Cancel",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Show success message
+      Swal.fire("Logged out!", "You have been logged out.", "success");
+      // Clear session storage
+      sessionStorage.setItem("isLoggedIn", "false");
+      // Navigate to home page
+      navigate("/");
+    }
+  });
+};
 
 export default AuthButtons;

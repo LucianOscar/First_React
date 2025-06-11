@@ -5,7 +5,7 @@ import About from "../pages/About";
 import Contact from "../pages/contact";
 import Login from "../pages/Auth/login1";
 import Register from "../pages/Auth/register0";
-import Logout from "../pages/Auth/logout";
+// import Logout from "../pages/Auth/logout";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/about" element={<About/>}/>
         <Route path="/contact" element={<Contact/>}/>
-        <Route path="/logout" element={<Logout/>}/>
+        {/* <Route path="/logout" element={<Logout/>}/> */}
         {/* Auth Routes */}
 
         <Route path="/login" element={<Login/>}/>
