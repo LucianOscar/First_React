@@ -5,7 +5,7 @@ import About from "../pages/About";
 import Contact from "../pages/contact";
 import Login from "../pages/Auth/login1";
 import Register from "../pages/Auth/register0";
-// import Logout from "../pages/Auth/logout";
+import Userprofile from "../profile/profile";
 
 function App() {
   return (
@@ -14,8 +14,7 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/about" element={<About/>}/>
         <Route path="/contact" element={<Contact/>}/>
-        {/* <Route path="/logout" element={<Logout/>}/> */}
-        {/* Auth Routes */}
+        <Route path="/profile" element={<Userprofile/>}/>
 
         <Route path="/login" element={<Login/>}/>
         <Route path="/register0" element={<Register/>}/>
